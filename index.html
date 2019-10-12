@@ -1,0 +1,76 @@
+---
+layout: default
+---
+
+<p>
+  <a href="https://github.com/tordans/OSM-Bike-Berlin-Tagging-Guide">GitHub</a>
+  <br>
+  Based on the <a href="https://github.com/BikeOttawa/OSM-Bike-Ottawa-Tagging-Guide">OSM Bike Ottawa Tagging Guide</a>
+</p>
+
+<div class="alert alert-warning" role="alert">
+  ATM, this is just a layout and presentation experiment. The content is copied from Ottawa.
+</div>
+
+{% for data_file in site.data.tagging_guide %}
+  <h1 class="mt-5 mb-4" id="chapter-{{ data_file[0] | replace: "_","-" | downcase }}">
+    {{ data_file[0] | replace: "_"," " | capitalize }}
+  </h1>
+  <table class="table table-striped" styl>
+    <thead>
+      <tr>
+        <th>Feature</th>
+        <th>Description</th>
+        <th>OSM Schema</th>
+        <th>Mapillary Photo</th>
+      </tr>
+    </thead>
+    {% for feature_row in data_file[1].features %}
+      <tr id="feature-{{ feature_row.feature | replace: " ","-" | downcase }}">
+        <th>
+          {{ feature_row.feature }}
+        </th>
+        <td style="font-size:80%">
+          {{ feature_row.description | markdownify }}
+        </td>
+        <td>
+          {% for element in feature_row.elements %}
+            <img class="float-right" src="/img/{{ element }}.png" alt="OSM {{ element | capitalize }}" />
+          {% endfor %}
+          {% for osm_tag in feature_row.osm %}
+            {% assign osm_tag_parts = osm_tag | split: "=" %}
+            {% if osm_tag_parts.size != 0 %}
+              <code style="white-space: nowrap">
+                {% assign wiki_link_key = osm_tag_parts[0] | string %}
+                {% assign wiki_link = site.data.osm_wiki_link[wiki_link_key] %}
+                {% if wiki_link %}
+                  <a href="{{wiki_link}}">{{ osm_tag_parts[0] }}</a>
+                {% else %}
+                  {{ osm_tag_parts[0] }}
+                {% endif %}
+                =
+                {% assign wiki_link_key = osm_tag_parts[1] | string %}
+                {% assign wiki_link = site.data.osm_wiki_link[wiki_link_key] %}
+                {% if wiki_link %}
+                  <a href="{{wiki_link}}">{{ osm_tag_parts[1] }}</a>
+                {% else %}
+                  {{ osm_tag_parts[1] }}
+                {% endif %}
+              </code>
+              <br>
+            {% endif %}
+          {% endfor %}
+        </td>
+        <td>
+          {% if feature_row.mapillary != nil %}
+            <a href="https://www.mapillary.com/app/?focus=photo&pKey={{ feature_row.mapillary }}">
+              <img src="https://d1cuyjsrcm0gby.cloudfront.net/{{ feature_row.mapillary }}/thumb-1024.jpg"
+                style="min-width:200px;max-width:200px"
+                alt="Mapillary Picture">
+            </a>
+          {% endif %}
+        </td>
+      </tr>
+    {% endfor %}
+  </table>
+{% endfor %}

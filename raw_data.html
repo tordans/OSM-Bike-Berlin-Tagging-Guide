@@ -1,0 +1,22 @@
+---
+layout: default
+---
+
+<h1>File <code>osm_wiki_link.yml</code></h1>
+
+<ul>
+{% for osm_wiki in site.data.osm_wiki_link %}
+  <li>
+    <code>
+      {{ osm_wiki | inspect }}
+    </code>
+  </li>
+{% endfor %}
+</ul>
+
+{% for data_file in site.data.tagging_guide %}
+  <h1>File <code>tagging_guide/{{ data_file[0] }}.yml</code></h1>
+  {% for feature in data_file[1].features %}
+    <pre>{{ feature | inspect }}</pre>
+  {% endfor %}
+{% endfor %}

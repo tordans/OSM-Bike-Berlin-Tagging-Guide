@@ -1,0 +1,25 @@
+<nav class="navbar navbar-expand navbar-dark bg-primary flex-column flex-md-row">
+  <a class="navbar-brand" href="/">OSM Bike Berlin Tagging Guide</a>
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Chapter
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          {% for data_file in site.data.tagging_guide %}
+            <a class="dropdown-item" href="#chapter-{{ data_file[0] | replace: "_","-" | downcase }}">
+              {{ data_file[0] | replace: "_"," " | capitalize }}
+            </a>
+          {% endfor %}
+          <!-- <div class="dropdown-divider"></div> -->
+        </div>
+      </li>
+    </ul>
+  </div>
+</nav>
