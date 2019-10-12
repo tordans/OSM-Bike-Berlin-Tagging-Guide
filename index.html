@@ -35,7 +35,7 @@ layout: default
         </td>
         <td>
           {% for element in feature_row.elements %}
-            <img class="float-right" src="/img/{{ element }}.png" alt="OSM {{ element | capitalize }}" />
+            <img class="float-right" src="img/{{ element }}.png" alt="OSM {{ element | capitalize }}" />
           {% endfor %}
           {% for osm_tag in feature_row.osm %}
             {% assign osm_tag_parts = osm_tag | split: "=" %}
